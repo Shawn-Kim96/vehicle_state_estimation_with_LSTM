@@ -31,7 +31,7 @@ logger.info(f"file_dir: {file_dir}")
 logger.info(f"project_dir: {project_dir}")
 
 class AmazonWebService:
-    def __init__(self, aws_credential_path=None, bucket_name=AWS_BUCKET_NAME):
+    def __init__(self, aws_credential_path="/Users/a11910/.aws/credentials", bucket_name=AWS_BUCKET_NAME):
         """
         함수를 실행하기 전에 terminal에서 vault-login, vault-auth 를 먼저 진행해줘서 키를 발급해야 된다.
         자세한 내용은 https://42dot.atlassian.net/wiki/spaces/sec/pages/852197381/AWS 참고
@@ -129,3 +129,10 @@ class AmazonWebService:
         if not bucket:
             bucket = self.bucket_name
         self.client.download_file(bucket, from_key, to_path)
+
+
+if __name__=="__main__":
+    aws = AmazonWebService()
+    object_list = aws.s3_list_objects(prefix="ufos/accident_reconstruction_demo/sensor_data/00000271/", delimiter="_20Hz.csv")
+    to_file = f"{project_dir.split(r'/libs')[0]}/data/raw/{object_list[0].split('/')[-1]}"
+    aws.download_object(object_list[0], to_file, bucket=AWS_BUCKET_NAME)

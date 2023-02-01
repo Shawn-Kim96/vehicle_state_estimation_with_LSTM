@@ -12,6 +12,9 @@ torch = "^1.13.1"
 pandas = "^1.5.2"
 numpy = "^1.24.1"
 jupyterlab = "^3.5.2"
+boto3 = "^1.26.50"
+python-dotenv = "^0.21.0"
+matplotlib = "^3.6.3"
 
 
 [build-system]
