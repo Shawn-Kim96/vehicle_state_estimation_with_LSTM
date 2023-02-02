@@ -1,0 +1,2 @@
+INFO:root:=========MODEL LSTM_hd1_100_nl_2_lr_0.001 TRAIN/TEST START=========
+INFO:root:Namespace(config_path='default_configs.json', data_dir='data.csv', device='cpu', model_name='LSTM', hidden_dim1=100, loss='L2', batch_size=16, num_layers=2, weight_decay=1e-06, learning_rate=0.001, n_epochs=100)
