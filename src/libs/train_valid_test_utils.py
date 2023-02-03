@@ -76,7 +76,7 @@ class TrainValidEvaluate:
                          f'valid_loss: {valid_rmse_losses:.4f} valid_mape: {valid_mape:.4f}')
             self.logging.info(print_msg)
 
-            if epoch % 5 == 0:
+            if epoch > 5:
                 if best_mape > valid_mape:
                     best_mape = valid_mape
                     torch.save(self.model.state_dict(), self.path)
