@@ -3,9 +3,8 @@ import numpy as np
 import random
 
 
-def generate_sin_data():
-    d_num = int(1e4)
-    t_list = [i/100 for i in range(d_num)]
+def generate_sin_data(d_num, data_interval):
+    t_list = [i/data_interval for i in range(d_num)]
     sin_list = [math.sin(t) for t in t_list]
 
     input_dim = int(10)

@@ -49,6 +49,8 @@ def main():
     parser.add_argument('--learning_rate', default=1e-3, type=float)
     parser.add_argument('--n_epochs', default=100, type=int)
     parser.add_argument('--logging_level', default='info', type=str)
+    parser.add_argument('--sin_data_number', default=10000, type=int)
+    parser.add_argument('--sin_data_interval', default=1000, type=int)
     args = parser.parse_args()
 
     logging_dict = {
@@ -78,7 +80,7 @@ def main():
 
     device = args.device if torch.cuda.is_available() else 'cpu'
 
-    total_data = generate_sin_data()
+    total_data = generate_sin_data(d_num=args.sin_data_number, data_interval=args.sin_data_interval)
     train_dataset = SinDataset(total_data=total_data, data_type='train')
     valid_dataset = SinDataset(total_data=total_data, data_type='valid')
     test_dataset = SinDataset(total_data=total_data, data_type='test')
