@@ -10,7 +10,7 @@ import torch.nn as nn
 from torch.utils.tensorboard import SummaryWriter
 
 from src.libs.dataset_utils import SinDataset
-from data.processed.sin_dataset import generate_sin_data
+from data.processed.trigonometric_dataset import *
 from models.sin_LSTM import SinLSTM
 from src.libs.train_valid_test_utils import TrainValidEvaluate
 from src.libs.visualize_utils import VisualizeUtils
@@ -40,17 +40,18 @@ def main():
     parser.add_argument('--config_path', default='default_configs.json', type=str)
     parser.add_argument('--data_dir', default='data.csv', type=str)
     parser.add_argument('--device', default='cpu', type=str)
-    parser.add_argument('--model_name', default='LSTM', type=str)
+    parser.add_argument('--model_name', default='Cos2SinLSTM', type=str)
     parser.add_argument('--hidden_dim1', default=100, type=int)
     parser.add_argument('--loss', default='L2', type=str)
     parser.add_argument('--batch_size', default=16, type=int)
     parser.add_argument('--num_layers', default=2, type=int)
     parser.add_argument('--weight_decay', default=1e-6, type=float)
     parser.add_argument('--learning_rate', default=1e-3, type=float)
-    parser.add_argument('--n_epochs', default=3, type=int)
+    parser.add_argument('--n_epochs', default=50, type=int)
     parser.add_argument('--logging_level', default='info', type=str)
     parser.add_argument('--sin_data_number', default=1000, type=int)
-    parser.add_argument('--sin_data_interval', default=10, type=int)
+    parser.add_argument('--sin_data_interval', default=20, type=int)
+    parser.add_argument('--data_sequence_length', default=10, type=int)
     args = parser.parse_args()
 
     logging_dict = {
@@ -67,8 +68,7 @@ def main():
     #     t_args.__dict__.update(json.load(f))
     #     args = parser.parse_args(namespace=t_args)
 
-    if args.model_name == 'LSTM':
-        save_name = f"{args.model_name}_hd1_{args.hidden_dim1}_nl_{args.num_layers}_lr_{args.learning_rate}"
+    save_name = f"{args.model_name}_hd1_{args.hidden_dim1}_nl_{args.num_layers}_lr_{args.learning_rate}"
 
     save_dir = f"./results/sin_test/{args.model_name}/{save_name}/"
     if not os.path.exists(save_dir):
@@ -80,7 +80,19 @@ def main():
 
     device = args.device if torch.cuda.is_available() else 'cpu'
 
-    total_data = generate_sin_data(d_num=args.sin_data_number, data_interval=args.sin_data_interval)
+    if args.model_name == 'SinLSTM':
+        total_data = generate_sin_data(
+            d_num=args.sin_data_number,
+            data_interval=args.sin_data_interval,
+            data_sequence=args.data_sequence_length
+        )
+    elif args.model_name == 'Cos2SinLSTM':
+        total_data = generate_cos_to_sin_data(
+            d_num=args.sin_data_number,
+            data_interval=args.sin_data_interval,
+            data_sequence=args.data_sequence_length
+        )
+
     train_dataset = SinDataset(total_data=total_data, data_type='train')
     valid_dataset = SinDataset(total_data=total_data, data_type='valid')
     test_dataset = SinDataset(total_data=total_data, data_type='test')
@@ -92,8 +104,11 @@ def main():
     lstm_input_dim = len(train_dataset[0][0][-1])
     models = {
         'SinLSTM': SinLSTM(input_dim=lstm_input_dim,
-                        lstm_hidden_dim=args.hidden_dim1,
-                        num_layers=args.num_layers).to(args.device)
+                           lstm_hidden_dim=args.hidden_dim1,
+                           num_layers=args.num_layers).to(args.device),
+        'Cos2SinLSTM': SinLSTM(input_dim=lstm_input_dim,
+                               lstm_hidden_dim=args.hidden_dim1,
+                               num_layers=args.num_layers).to(args.device)
     }
     model = models[args.model_name]
     print(model)
@@ -132,7 +147,8 @@ def main():
     logging.info(f'TEST SCORE :: \n \ttest MAPE={train_valid_evaluate.avg_test_mape:.4f} \n\ttest loss={train_valid_evaluate.avg_test_loss:.4f}')
 
     visualize_util = VisualizeUtils(predict_value=train_valid_evaluate.test_prediction_result,
-                                    true_value=train_valid_evaluate.test_target_result)
+                                    true_value=train_valid_evaluate.test_target_result,
+                                    data_interval=args.sin_data_interval)
     visualize_util.visualize_sin_data('sin prediction result')
     logging.info('========MODEL TRAIN/TEST FINISHED==========\n\n')
 

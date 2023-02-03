@@ -1,6 +1,6 @@
 {
   "device": "cpu",
-  "model_name": "LSTM",
+  "model_name": "Cos2SinLSTM",
   "hidden_dim1": 200,
   "hidden_dim2": 100,
   "loss": "L2",
