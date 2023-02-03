@@ -47,10 +47,10 @@ def main():
     parser.add_argument('--num_layers', default=2, type=int)
     parser.add_argument('--weight_decay', default=1e-6, type=float)
     parser.add_argument('--learning_rate', default=1e-3, type=float)
-    parser.add_argument('--n_epochs', default=100, type=int)
+    parser.add_argument('--n_epochs', default=3, type=int)
     parser.add_argument('--logging_level', default='info', type=str)
-    parser.add_argument('--sin_data_number', default=10000, type=int)
-    parser.add_argument('--sin_data_interval', default=1000, type=int)
+    parser.add_argument('--sin_data_number', default=1000, type=int)
+    parser.add_argument('--sin_data_interval', default=10, type=int)
     args = parser.parse_args()
 
     logging_dict = {
@@ -91,7 +91,7 @@ def main():
 
     lstm_input_dim = len(train_dataset[0][0][-1])
     models = {
-        'LSTM': SinLSTM(input_dim=lstm_input_dim,
+        'SinLSTM': SinLSTM(input_dim=lstm_input_dim,
                         lstm_hidden_dim=args.hidden_dim1,
                         num_layers=args.num_layers).to(args.device)
     }
@@ -129,13 +129,11 @@ def main():
     train_valid_evaluate.sin_test()
     writer.flush()
 
-    logging.info(f'TEST SCORE :: ',
-                 f'\ttest MAPE={train_valid_evaluate.avg_test_mape:.4f}',
-                 f'\ttest loss={train_valid_evaluate.avg_test_loss:.4f}')
+    logging.info(f'TEST SCORE :: \n \ttest MAPE={train_valid_evaluate.avg_test_mape:.4f} \n\ttest loss={train_valid_evaluate.avg_test_loss:.4f}')
 
     visualize_util = VisualizeUtils(predict_value=train_valid_evaluate.test_prediction_result,
                                     true_value=train_valid_evaluate.test_target_result)
-    visualize_util.visualize_1d_data('sin prediction result')
+    visualize_util.visualize_sin_data('sin prediction result')
     logging.info('========MODEL TRAIN/TEST FINISHED==========\n\n')
 
 

@@ -20,7 +20,7 @@ class TrainValidEvaluate:
         self.avg_train_loss, self.avg_train_mape = [], []
         self.avg_valid_loss, self.avg_valid_mape = [], []
         self.test_prediction_result, self.test_target_result = [], []
-        self.avg_test_mape, self.avg_test_loss = np.inf, np.inf
+        self.avg_test_mape, self.avg_test_loss = 0, 0
 
     def sin_evaluate(self, x, y):
         output = self.model(x.to(self.device))
@@ -85,8 +85,6 @@ class TrainValidEvaluate:
         self.model.load_state_dict(torch.load(self.path))
 
     def sin_test(self):
-        test_rmse_losses, test_mape = 0, 0
-
         self.model.eval()
         with torch.no_grad():
             for x, y in self.test_loader:
@@ -94,9 +92,9 @@ class TrainValidEvaluate:
                 self.avg_test_mape += mape
                 self.avg_test_loss += (loss ** 0.5)
 
-                for y, p in zip(y, predicted):
-                    self.test_prediction_result.append(p)
-                    self.test_target_result.append(y)
+                for input_, true_, pred_ in zip(x, y, predicted):
+                    self.test_prediction_result.append((input_, pred_))
+                    self.test_target_result.append((input_, true_))
         self.avg_test_mape /= len(self.test_loader)
         self.avg_test_loss /= len(self.test_loader)
 
