@@ -17,6 +17,13 @@ from src.libs.visualize_utils import VisualizeUtils
 
 np.random.seed(42)
 
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+logger.addHandler(stream_handler)
+
 
 def main():
     """
@@ -41,8 +48,17 @@ def main():
     parser.add_argument('--weight_decay', default=1e-6, type=float)
     parser.add_argument('--learning_rate', default=1e-3, type=float)
     parser.add_argument('--n_epochs', default=100, type=int)
+    parser.add_argument('--logging_level', default='info', type=str)
     args = parser.parse_args()
 
+    logging_dict = {
+        'debug': logging.DEBUG,
+        'info': logging.INFO,
+        'warning': logging.WARNING,
+        'error': logging.ERROR,
+        'critical': logging.CRITICAL
+    }
+    logger.setLevel(logging_dict[args.logging_level])
     # # Get default value from json
     # with open(args.config_path, 'r') as f:
     #     t_args = argparse.Namespace()

@@ -91,12 +91,13 @@ class TrainValidEvaluate:
         with torch.no_grad():
             for x, y in self.test_loader:
                 output, predicted, mape, loss = self.sin_evaluate(x, y)
-                self.test_mape += mape
-                self.test_rmse_loss += (loss ** 0.5)
+                self.avg_test_mape += mape
+                self.avg_test_loss += (loss ** 0.5)
 
                 for y, p in zip(y, predicted):
                     self.test_prediction_result.append(p)
                     self.test_target_result.append(y)
-        self.avg_test_mape, self.avg_test_loss = test_mape/len(self.test_loader), test_rmse_losses/len(self.test_loader)
+        self.avg_test_mape /= len(self.test_loader)
+        self.avg_test_loss /= len(self.test_loader)
 
-        return self.avg_test_loss, self.avg_test_mape, self.prediction_result, self.target_result
+        return self.avg_test_loss, self.avg_test_mape, self.test_prediction_result, self.test_target_result

@@ -1,2 +1,20 @@
 INFO:root:=========MODEL LSTM_hd1_100_nl_2_lr_0.001 TRAIN/TEST START=========
 INFO:root:Namespace(config_path='default_configs.json', data_dir='data.csv', device='cpu', model_name='LSTM', hidden_dim1=100, loss='L2', batch_size=16, num_layers=2, weight_decay=1e-06, learning_rate=0.001, n_epochs=100)
+INFO:root:=========MODEL LSTM_hd1_100_nl_2_lr_0.001 TRAIN/TEST START=========
+INFO:root:Namespace(config_path='default_configs.json', data_dir='data.csv', device='cpu', model_name='LSTM', hidden_dim1=100, loss='L2', batch_size=16, num_layers=2, weight_decay=1e-06, learning_rate=0.001, n_epochs=100)
+INFO:root:train_loss: 0.1786 train_mape: 1.2637 || valid_loss: 0.0259 valid_mape: 0.1954
+INFO:root:train_loss: 0.1530 train_mape: 1.0432 || valid_loss: 0.0812 valid_mape: 0.1714
+INFO:root:train_loss: 0.1353 train_mape: 0.9517 || valid_loss: 0.0962 valid_mape: 0.1878
+INFO:root:train_loss: 0.1272 train_mape: 0.8897 || valid_loss: 0.1343 valid_mape: 0.7115
+INFO:root:train_loss: 0.1114 train_mape: 0.5861 || valid_loss: 0.0579 valid_mape: 0.3054
+INFO:root:Saving best performance model
+INFO:root:train_loss: 0.1034 train_mape: 0.6415 || valid_loss: 0.0957 valid_mape: 0.5219
+INFO:root:train_loss: 0.0833 train_mape: 0.5974 || valid_loss: 0.1127 valid_mape: 0.9086
+INFO:root:train_loss: 0.0779 train_mape: 0.6024 || valid_loss: 0.1083 valid_mape: 0.8260
+INFO:root:train_loss: 0.0795 train_mape: 0.4604 || valid_loss: 0.1109 valid_mape: 0.4513
+INFO:root:train_loss: 0.0717 train_mape: 0.5864 || valid_loss: 0.0384 valid_mape: 0.2237
+INFO:root:Saving best performance model
+INFO:root:train_loss: 0.0639 train_mape: 0.3947 || valid_loss: 0.0879 valid_mape: 0.5827
+INFO:root:train_loss: 0.0637 train_mape: 0.3262 || valid_loss: 0.1430 valid_mape: 0.2719
+INFO:root:train_loss: 0.0642 train_mape: 0.4106 || valid_loss: 0.0933 valid_mape: 0.6803
+INFO:root:train_loss: 0.0601 train_mape: 0.4619 || valid_loss: 0.2503 valid_mape: 0.7812
