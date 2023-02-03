@@ -28,7 +28,7 @@ class SinLSTM(nn.Module):
         _, (h_t, c_t) = self.lstm(seq_x.float())  # h_t dim = [num_layers, batch_size, LSTM_output_dim]
         output = h_t.permute(1, 0, 2)  # output dim = [batch_size, num_layers, LSTM_output_dim]
         output = self.flatten(output)  # output dim = [batch_size, num_layers*LSTM_output_dim]
-        output = self.relu(self.bn0(self.fc0(output)))
-        output = self.fc1(output)
+        output = self.relu(self.bn0(self.fc0(output)))  # output = [batch_size, fc0_output_dim]
+        output = self.fc1(output)  # output = [batch_size, fc1_output_dim]
 
         return output
