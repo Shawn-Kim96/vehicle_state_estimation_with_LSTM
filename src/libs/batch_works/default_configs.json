@@ -1,0 +1,12 @@
+{
+  "device": "cpu",
+  "model_name": "Cos2SinLSTM",
+  "hidden_dim1": 200,
+  "hidden_dim2": 100,
+  "loss": "L2",
+  "batch_size": 16,
+  "n_epochs": 100,
+  "learning_rate": 0.001,
+  "weight_decay": 1e-06,
+  "num_layers": 2
+}
