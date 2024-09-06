@@ -1,6 +1,7 @@
 # Vehicle Dynamics State Prediction using LSTM Models
 
 This project aims to predict the next state of a vehicle using dynamic data from 6 degrees of freedom (6DOF) and other related vehicle dynamics inputs. 
+
 The project leverages various machine learning models, particularly LSTM (Long Short-Term Memory) networks, to improve the accuracy of state predictions using data such as velocity, acceleration, and position. These models are trained to forecast future states based on past dynamic behavior.
 
 
@@ -48,9 +49,10 @@ The project leverages various machine learning models, particularly LSTM (Long S
 
 ## Objective
 The main goal of this project is to leverage machine learning, particularly LSTM networks, to predict the future state of vehicles based on historical dynamics data. 
+
 By accurately forecasting these states, this system can be used in applications such as autonomous driving, safety simulations, or vehicle dynamics control systems.
 
 ## Usage
-`Model Training`: Use the notebooks to load datasets from data/processed/6dof/ and train various LSTM models located in the models/ folder.
-`Experimentation`: Modify the architecture and parameters within the provided notebooks to explore different vehicle state prediction methods.
-`Data Handling`: The dev_utils/ and src/ directories provide scripts for processing new vehicle dynamics data and integrating it into the model training pipeline.
+- `Model Training`: Use the notebooks to load datasets from data/processed/6dof/ and train various LSTM models located in the models/ folder.
+- `Experimentation`: Modify the architecture and parameters within the provided notebooks to explore different vehicle state prediction methods.
+- `Data Handling`: The dev_utils/ and src/ directories provide scripts for processing new vehicle dynamics data and integrating it into the model training pipeline.
